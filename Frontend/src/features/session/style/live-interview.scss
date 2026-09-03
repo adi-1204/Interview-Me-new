@@ -1,0 +1,143 @@
+@use "sass:color";
+
+$bg-page: #081510;
+$bg-card-soft: rgba(12, 31, 25, 0.92);
+$bg-panel: rgba(8, 23, 18, 0.9);
+$border-color: rgba(120, 242, 188, 0.14);
+$border-strong: rgba(120, 242, 188, 0.22);
+$text-primary: #f2fff8;
+$text-muted: #9bc9b5;
+$accent: #78f2bc;
+$accent-deep: #45c98d;
+$shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+$font-stack: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+.live-interview-page {
+  width: 100%;
+  min-height: 100vh;
+  color: $text-primary;
+  font-family: $font-stack;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 1.25rem 3rem;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at top left, rgba(72, 184, 130, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(22, 92, 63, 0.14), transparent 24%),
+    linear-gradient(135deg, #081510 0%, #0c1c17 42%, #06100d 100%);
+}
+
+.live-container {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.live-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.2rem;
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: $accent;
+    letter-spacing: 0.05em;
+  }
+
+  .end-interview-btn {
+    padding: 0.55rem 1.2rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 92, 124, 0.12);
+    border: 1px solid rgba(255, 92, 124, 0.3);
+    color: #ff5c7c;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 92, 124, 0.22);
+      border-color: rgba(255, 92, 124, 0.5);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+.question-card {
+  background: linear-gradient(180deg, $bg-card-soft, $bg-panel);
+  border: 1px solid $border-color;
+  border-radius: 1.4rem;
+  padding: 1.6rem 1.8rem;
+  box-shadow: $shadow;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__eyebrow {
+    color: $accent;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.45rem;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+}
+
+.submit-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.4rem;
+    border: none;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, $accent 0%, $accent-deep 100%);
+    color: #07120d;
+    font-family: $font-stack;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 16px 28px rgba(35, 126, 88, 0.25);
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px rgba(35, 126, 88, 0.32);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}

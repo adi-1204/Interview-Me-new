@@ -1,0 +1,99 @@
+@use "sass:color";
+
+$bg-page: #081510;
+$bg-card: rgba(10, 27, 21, 0.96);
+$border-color: rgba(120, 242, 188, 0.16);
+$accent: #78f2bc;
+$text-primary: #f2fff8;
+$text-muted: #9bc9b5;
+$font-stack: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+.processing-page {
+  width: 100%;
+  min-height: 100vh;
+  color: $text-primary;
+  font-family: $font-stack;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at top left, rgba(72, 184, 130, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(22, 92, 63, 0.14), transparent 24%),
+    linear-gradient(135deg, #081510 0%, #0c1c17 42%, #06100d 100%);
+}
+
+.processing-card {
+  width: 100%;
+  max-width: 540px;
+  background: linear-gradient(180deg, rgba(12, 31, 25, 0.94), rgba(8, 23, 18, 0.92));
+  border: 1px solid $border-color;
+  border-radius: 1.6rem;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+}
+
+.pulse-ring-wrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid $accent;
+  opacity: 0.8;
+  animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.pulse-ring-inner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(120, 242, 188, 0.15);
+  border: 1px solid rgba(120, 242, 188, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $accent;
+  font-size: 1.4rem;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.processing-info {
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}

@@ -1,0 +1,84 @@
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+const app = express();
+
+const normalizeOrigin = (value = "") => value.trim().replace(/\/+$/, "");
+
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((origin) => normalizeOrigin(origin))
+  .filter(Boolean);
+
+for (const localOrigin of ["http://localhost:5173", "http://localhost:5174"]) {
+  const normalizedLocalOrigin = normalizeOrigin(localOrigin);
+
+  if (!allowedOrigins.includes(normalizedLocalOrigin)) {
+    allowedOrigins.push(normalizedLocalOrigin);
+  }
+}
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      const normalizedOrigin = normalizeOrigin(origin || "");
+
+      if (!origin || allowedOrigins.includes(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  }),
+);
+
+/* require all the routes here */
+const authRouter = require("./routes/auth.routes");
+const interviewRouter = require("./routes/interview.routes");
+const resumeRouter = require("./routes/resume.routes");
+const sessionRouter = require("./routes/session.routes");
+
+// ── Root health check route ────────────────────────────────
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "InterviewMe backend is running",
+    status: "healthy",
+  });
+});
+
+/* using all the routes here */
+app.use("/api/auth", authRouter);
+app.use("/api/interview", interviewRouter);
+app.use("/api/resumes", resumeRouter);
+app.use("/api/sessions", sessionRouter);
+
+app.use((err, req, res, next) => {
+  if (err?.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({
+      message: "Uploaded file must be 5MB or smaller.",
+    });
+  }
+
+  if (err?.message === "Not allowed by CORS") {
+    return res.status(403).json({
+      message: "Frontend origin is not allowed by CORS configuration.",
+    });
+  }
+
+  if (err) {
+    console.error(err);
+    return res.status(err.status || 500).json({
+      message: err.message || "Something went wrong on the server.",
+    });
+  }
+
+  return next();
+});
+
+module.exports = app;
